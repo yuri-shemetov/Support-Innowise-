@@ -1,6 +1,6 @@
 from rest_framework import generics, permissions
 from . import serializers
-from django.contrib.auth.models import User
+from users.models import User
 from . import models
 from . import perm
 

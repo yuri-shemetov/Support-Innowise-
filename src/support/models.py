@@ -14,7 +14,7 @@ class Status(models.Model):
 
 class Ticket(models.Model):
     author = models.ForeignKey(
-        'auth.User', 
+        'users.User', 
         related_name='tickets', 
         on_delete=models.CASCADE
         )
@@ -41,7 +41,7 @@ class Ticket(models.Model):
 
 class Comment(models.Model):
     author = models.ForeignKey(
-        'auth.User',
+        'users.User',
         related_name='comments', 
         on_delete=models.CASCADE
         )
