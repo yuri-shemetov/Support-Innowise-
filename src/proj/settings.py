@@ -128,10 +128,14 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
-    ),
-}
-
 AUTH_USER_MODEL = 'users.User'
+
+REST_FRAMEWORK = {
+   
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'users.backends.JWTAuthentication',
+        ),
+    'EXCEPTION_HANDLER': 'proj.exceptions.core_exception_handler',
+    'NON_FIELD_ERRORS_KEY': 'error'
+
+}
