@@ -2,7 +2,7 @@ import jwt
 from django.db import models
 from datetime import datetime, timedelta
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
-from proj import local_settings
+from django.conf import settings
  
 class UserManager(BaseUserManager):
  
@@ -57,12 +57,12 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.username
 
     def _generate_jwt_token(self):
-        dt = datetime.now() + timedelta(days=1)
+        dt = datetime.now() + timedelta(days=30)
 
         token = jwt.encode({
             'id': self.pk,
             'exp': int(dt.strftime('%S'))
-        }, local_settings.KEY, algorithm='HS256')
+        }, settings.SECRET_KEY, algorithm='HS256')
 
         return token.decode('utf-8')
 

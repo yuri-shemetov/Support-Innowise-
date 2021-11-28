@@ -20,7 +20,7 @@ class RegistrationSerializer(serializers.ModelSerializer):
 
 class LoginSerializer(serializers.Serializer):
     """ Authenticates an existing user. Email and password are required. Returns a JSON web token. """
-    email = serializers.EmailField(write_only=True)
+    email = serializers.EmailField(allow_blank = False)
     username = serializers.CharField(max_length=255, read_only=True)
     password = serializers.CharField(max_length=128, write_only=True)
     token = serializers.CharField(max_length=255, read_only=True)

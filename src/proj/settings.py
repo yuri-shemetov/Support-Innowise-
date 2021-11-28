@@ -79,8 +79,12 @@ WSGI_APPLICATION = 'proj.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'support_db',
+        'USER': 'mainuser',
+        'PASSWORD': '1234567!',
+        'HOST': '127.0.0.1',
+        'PORT': 5432
     }
 }
 
@@ -131,8 +135,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'users.User'
 
 REST_FRAMEWORK = {
-   
     'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
         'users.backends.JWTAuthentication',
         ),
     'EXCEPTION_HANDLER': 'proj.exceptions.core_exception_handler',
