@@ -2,7 +2,7 @@ import jwt
 from django.db import models
 from datetime import datetime, timedelta
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
-from django.conf import settings
+from proj.settings import SECRET_KEY
  
 class UserManager(BaseUserManager):
  
@@ -61,9 +61,9 @@ class User(AbstractBaseUser, PermissionsMixin):
 
         token = jwt.encode({
             'id': self.pk,
-            'exp': int(dt.strftime('%S'))
-        }, settings.SECRET_KEY, algorithm='HS256')
+            'exp': dt.utcfromtimestamp(dt.timestamp())
+        }, SECRET_KEY, algorithm='HS256')
 
-        return token.decode('utf-8')
+        return token
 
 

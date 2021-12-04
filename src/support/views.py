@@ -3,6 +3,13 @@ from . import serializers
 from users.models import User
 from . import models
 from . import perm
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
+class MainPage(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+    def get(self, request):
+        return Response({'key': "Congratulations! You've authenticated!"})
 
 class UserList(generics.ListAPIView):
     queryset = User.objects.all()

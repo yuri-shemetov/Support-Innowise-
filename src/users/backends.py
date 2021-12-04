@@ -2,7 +2,7 @@ import jwt
 
 from rest_framework import authentication, exceptions
 from .models import User
-from django.conf import settings
+from proj.settings import SECRET_KEY
 
 
 class JWTAuthentication(authentication.BaseAuthentication):
@@ -14,8 +14,7 @@ class JWTAuthentication(authentication.BaseAuthentication):
         """
         request.user = None
         auth_header = authentication.get_authorization_header(request).split()
-        auth_header_prefix = self.authentication_header_prefix.lower() 
-        #print(auth_header)       
+        auth_header_prefix = self.authentication_header_prefix.lower()      
         if not auth_header:
             return None
         if len(auth_header) == 1:
@@ -36,7 +35,7 @@ class JWTAuthentication(authentication.BaseAuthentication):
         successful, return the user and token. If not, throw an error.
         """
         try:
-            payload = jwt.decode(token, settings.SECRET_KEY, algorithms=['HS256'])
+            payload = jwt.decode(token, SECRET_KEY)
         except Exception:
             msg = 'Invalid authentication. Could not decode token.'
             raise exceptions.AuthenticationFailed(msg)
