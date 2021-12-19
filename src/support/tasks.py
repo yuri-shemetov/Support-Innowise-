@@ -7,7 +7,7 @@ from .models import Contact
 def send_letter_email(user_email):
     send(user_email)
 
-""" @app.task
+@app.task
 def send_beat_email():
     for contact in Contact.objects.all():
         send_mail(
@@ -16,4 +16,4 @@ def send_beat_email():
             'yuri7shemetov@gmail.com',
             [contact.email],
             fail_silently=False
-        ) """
+        )

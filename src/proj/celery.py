@@ -8,11 +8,11 @@ app = Celery('proj')
 app.config_from_object('django.conf:settings', namespace='CELERY')
 app.autodiscover_tasks()
 
-""" #celery beat tasks
+#celery beat tasks
 
 app.conf.beat_schedule = {
-    'send-message-every-2-minute':{
-        'task':'main.tasks.send_beat_email',
+    'send-message-every-2-minute': {
+        'task':'support.tasks.send_beat_email',
         'schedule': crontab(minute='*/2'),
-    }
-} """
+    },
+}
