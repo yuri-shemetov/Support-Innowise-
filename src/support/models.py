@@ -64,3 +64,14 @@ class Comment(models.Model):
 
     class Meta:
         ordering = ['created']
+
+class Contact(models.Model):
+    name = models.CharField(max_length=30)
+    email = models.EmailField(max_length=50)
+
+    def __str__(self):
+        return self.email
+
+    class Meta:
+        verbose_name="Contact"
+        verbose_name_plural="Contacts"

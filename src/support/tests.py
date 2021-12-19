@@ -17,14 +17,11 @@ class UserProfileTestCase(APITestCase):
         self.assertTrue('token' in response.data)
         self.token=response.data['token']
 
-    def api_authentication(self):
-        self.client.credentials(HTTP_AUTHORIZATION='Token '+ self.token)
-        
-    def test_userprofile_is_authenticated(self):     
+    def test_userprofile_is_authenticated(self):
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token)
         response=self.client.get(self.profile_url)
         self.assertEqual(response.status_code,status.HTTP_200_OK)
 
     def test_userprofile_is_not_unauthenticated(self):
-        self.client.force_authenticate(user=None)
         response=self.client.get(self.profile_url)
         self.assertEqual(response.status_code,status.HTTP_403_FORBIDDEN)

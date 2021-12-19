@@ -1,15 +1,27 @@
-from rest_framework import generics, permissions
+from rest_framework import generics, permissions, status, views
 from . import serializers
 from users.models import User
 from . import models
 from . import perm
 from rest_framework.response import Response
 from rest_framework.views import APIView
+#from . service import send
+from .tasks import send_letter_email
 
-class MainPage(APIView):
-    permission_classes = [permissions.IsAuthenticated]
-    def get(self, request):
-        return Response({'key': "Congratulations! You've authenticated!"})
+
+class SubscriptionPage(APIView):
+    permission_classes = (permissions.AllowAny,)
+    serializer_class = serializers.SubscriptionSerializer
+
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            #send(serializer.instance.email)
+            send_letter_email.delay(serializer.instance.email)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 class UserList(generics.ListAPIView):
     queryset = User.objects.all()
